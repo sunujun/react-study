@@ -1,10 +1,24 @@
 import "./App.css";
 
-const Header = ({ title }: { title: string }) => {
+const Header = ({
+  title,
+  onChangeMode,
+}: {
+  title: string;
+  onChangeMode: () => void;
+}) => {
   return (
     <header>
       <h1>
-        <a href="/">{title}</a>
+        <a
+          href="/"
+          onClick={(event) => {
+            event.preventDefault();
+            onChangeMode();
+          }}
+        >
+          {title}
+        </a>
       </h1>
     </header>
   );
@@ -12,19 +26,30 @@ const Header = ({ title }: { title: string }) => {
 
 const Nav = ({
   topics,
+  onChangeMode,
 }: {
   topics: {
     id: number;
     title: string;
     body: string;
   }[];
+  onChangeMode: (id: number) => void;
 }) => {
   const lis = [];
   for (let i = 0; i < topics.length; i++) {
     let t = topics[i];
     lis.push(
       <li key={t.id}>
-        <a href={"/read/" + t.id}>{t.title}</a>
+        <a
+          id={t.id.toString()}
+          href={"/read/" + t.id}
+          onClick={(event) => {
+            event.preventDefault();
+            onChangeMode(Number((event.target as HTMLAnchorElement).id));
+          }}
+        >
+          {t.title}
+        </a>
       </li>
     );
   }
@@ -54,8 +79,18 @@ const App = () => {
 
   return (
     <div>
-      <Header title="WEB" />
-      <Nav topics={topics} />
+      <Header
+        title="WEB"
+        onChangeMode={() => {
+          alert("Header");
+        }}
+      />
+      <Nav
+        topics={topics}
+        onChangeMode={(id) => {
+          alert(id);
+        }}
+      />
       <Article title="Welcome" body="Hello, WEB" />
     </div>
   );
