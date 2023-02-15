@@ -3,14 +3,28 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended'],
+    extends: [
+        'eslint:recommended',
+        'plugin:react/recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:import/errors',
+        'plugin:import/warnings',
+    ],
     overrides: [],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaVersion: 'latest',
+        project: ['./tsconfig.json'],
         sourceType: 'module',
     },
-    plugins: ['react', '@typescript-eslint'],
+    plugins: ['react', '@typescript-eslint', 'functional', 'import'],
+    settings: {
+        'import/resolver': {
+            node: {
+                extensions: ['.js', '.jsx', '.ts', '.tsx'],
+            },
+        },
+    },
     rules: {
         // General
         'no-console': ['error', { allow: ['debug', 'warn', 'error'] }],
@@ -79,33 +93,8 @@ module.exports = {
         'react/prop-types': 'off',
         'react/react-in-jsx-scope': 'off',
         // Functional
-        'functional/prefer-readonly-type': [
-            'error',
-            {
-                allowLocalMutation: true,
-                allowMutableReturnType: true,
-                ignoreClass: true,
-            },
-        ],
-        'import/order': [
-            'error',
-            {
-                groups: ['builtin', 'external', 'internal'],
-                pathGroups: [
-                    {
-                        pattern: '{react,react-dom/**}',
-                        group: 'external',
-                        position: 'before',
-                    },
-                ],
-                pathGroupsExcludedImportTypes: ['react'],
-                'newlines-between': 'always',
-                alphabetize: {
-                    order: 'asc',
-                    caseInsensitive: true,
-                },
-            },
-        ],
+        // 'functional/prefer-immutable-types': ['error', { enforcement: 'Immutable' }],
+        // 'functional/type-declaration-immutability': 'error',
         'linebreak-style': ['error', 'unix'],
         eqeqeq: ['error', 'always', { null: 'ignore' }],
         camelcase: ['error', { properties: 'never' }],
