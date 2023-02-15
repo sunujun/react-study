@@ -63,14 +63,39 @@ const Article = ({ title, body }: { title: string; body: string }) => {
     );
 };
 
+const Create = ({ onCreate }: { onCreate: (title: string, body: string) => void }) => {
+    return (
+        <article>
+            <h2>Create</h2>
+            <form
+                onSubmit={event => {
+                    event.preventDefault();
+                    const title = (event.currentTarget.title as unknown as HTMLInputElement).value;
+                    const body = (event.currentTarget.body as unknown as HTMLInputElement).value;
+                    onCreate(title, body);
+                }}>
+                <p>
+                    <input type="text" name="title" placeholder="title" />
+                </p>
+                <p>
+                    <textarea name="body" placeholder="body" />
+                </p>
+                <p>
+                    <input type="submit" value="Create" />
+                </p>
+            </form>
+        </article>
+    );
+};
+
 const App = () => {
     const [mode, setMode] = useState('WELCOME');
     const [id, setId] = useState<number | null>(null);
-    const topics = [
+    const [topics, setTopics] = useState([
         { id: 1, title: 'html', body: 'html is ...' },
         { id: 2, title: 'css', body: 'css is ...' },
         { id: 3, title: 'javascript', body: 'javascript is ...' },
-    ];
+    ]);
     let content = null;
     if (mode === 'WELCOME') {
         content = <Article title="Welcome" body="Hello, WEB" />;
@@ -92,6 +117,18 @@ const App = () => {
             }
         }
         content = <Article title={title} body={body} />;
+    } else if (mode === 'CREATE') {
+        content = (
+            <Create
+                onCreate={(_title, _body) => {
+                    const lastId = topics.length === 0 ? 0 : topics[topics.length - 1].id;
+                    const newTopic = { id: lastId + 1, title: _title, body: _body };
+                    setTopics(prev => [...prev, newTopic]);
+                    setMode('READ');
+                    setId(lastId + 1);
+                }}
+            />
+        );
     }
 
     return (
@@ -110,6 +147,14 @@ const App = () => {
                 }}
             />
             {content}
+            <a
+                href="/create"
+                onClick={event => {
+                    event.preventDefault();
+                    setMode('CREATE');
+                }}>
+                Create
+            </a>
         </div>
     );
 };
