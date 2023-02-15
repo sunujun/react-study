@@ -64,21 +64,32 @@ const Article = ({ title, body }: { title: string; body: string }) => {
 };
 
 const Create = ({ onCreate }: { onCreate: (title: string, body: string) => void }) => {
+    const [state, setState] = useState({
+        title: '',
+        body: '',
+    });
+
+    const onFieldChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const value = event.target.value;
+        setState({ ...state, [event.target.name]: value });
+    };
+
     return (
         <article>
             <h2>Create</h2>
             <form
                 onSubmit={event => {
                     event.preventDefault();
-                    const title = (event.currentTarget.title as unknown as HTMLInputElement).value;
-                    const body = (event.currentTarget.body as unknown as HTMLInputElement).value;
-                    onCreate(title, body);
+                    // const title = (event.currentTarget.title as unknown as HTMLInputElement).value;
+                    // const body = (event.currentTarget.body as unknown as HTMLInputElement).value;
+                    console.log(state);
+                    onCreate(state.title, state.body);
                 }}>
                 <p>
-                    <input type="text" name="title" placeholder="title" />
+                    <input type="text" name="title" placeholder="title" onChange={onFieldChange} />
                 </p>
                 <p>
-                    <textarea name="body" placeholder="body" />
+                    <textarea name="body" placeholder="body" onChange={onFieldChange} />
                 </p>
                 <p>
                     <input type="submit" value="Create" />
