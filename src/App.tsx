@@ -173,16 +173,28 @@ const App = () => {
         }
         content = <Article title={title} body={body} />;
         contextControl = (
-            <li>
-                <a
-                    href={'/update' + id}
-                    onClick={event => {
-                        event.preventDefault();
-                        setMode('UPDATE');
-                    }}>
-                    Update
-                </a>
-            </li>
+            <>
+                <li>
+                    <a
+                        href={'/update' + id}
+                        onClick={event => {
+                            event.preventDefault();
+                            setMode('UPDATE');
+                        }}>
+                        Update
+                    </a>
+                </li>
+                <li>
+                    <input
+                        type="button"
+                        value="Delete"
+                        onClick={() => {
+                            setTopics(prev => prev.filter(topic => topic.id !== id));
+                            setMode('WELCOME');
+                        }}
+                    />
+                </li>
+            </>
         );
     } else if (mode === 'CREATE') {
         content = (
