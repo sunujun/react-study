@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import { Counter } from './components/Counter';
 
 const Header = ({ title, onChangeMode }: { title: string; onChangeMode: () => void }) => {
     return (
@@ -268,6 +269,7 @@ const App = () => {
                 </li>
                 {contextControl}
             </ul>
+            <Counter />
         </div>
     );
 };
