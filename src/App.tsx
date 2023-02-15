@@ -1,48 +1,62 @@
 import "./App.css";
 
-const Header = () => {
+const Header = ({ title }: { title: string }) => {
   return (
     <header>
       <h1>
-        <a href="/">WEB</a>
+        <a href="/">{title}</a>
       </h1>
     </header>
   );
 };
 
-const Nav = () => {
+const Nav = ({
+  topics,
+}: {
+  topics: {
+    id: number;
+    title: string;
+    body: string;
+  }[];
+}) => {
+  const lis = [];
+  for (let i = 0; i < topics.length; i++) {
+    let t = topics[i];
+    lis.push(
+      <li key={t.id}>
+        <a href={"/read/" + t.id}>{t.title}</a>
+      </li>
+    );
+  }
+
   return (
     <nav>
-      <ol>
-        <li>
-          <a href="/read/1">html</a>
-        </li>
-        <li>
-          <a href="/read/2">css</a>
-        </li>
-        <li>
-          <a href="/read/3">js</a>
-        </li>
-      </ol>
+      <ol>{lis}</ol>
     </nav>
   );
 };
 
-const Article = () => {
+const Article = ({ title, body }: { title: string; body: string }) => {
   return (
     <article>
-      <h2>Welcome</h2>
-      Hello, WEB
+      <h2>{title}</h2>
+      {body}
     </article>
   );
 };
 
 const App = () => {
+  const topics = [
+    { id: 1, title: "html", body: "html is ..." },
+    { id: 2, title: "css", body: "css is ..." },
+    { id: 3, title: "javascript", body: "javascript is ..." },
+  ];
+
   return (
     <div>
-      <Header />
-      <Nav />
-      <Article />
+      <Header title="WEB" />
+      <Nav topics={topics} />
+      <Article title="Welcome" body="Hello, WEB" />
     </div>
   );
 };
