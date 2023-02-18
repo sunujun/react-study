@@ -71,7 +71,7 @@ const Create = ({ onCreate }: { onCreate: (title: string, body: string) => void 
 
     const onFieldChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const value = event.target.value;
-        setState({ ...state, [event.target.name]: value });
+        setState(prevState => ({ ...prevState, [event.target.name]: value }));
     };
 
     return (
@@ -114,7 +114,7 @@ const Update = ({
 
     const onFieldChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const value = event.target.value;
-        setState({ ...state, [event.target.name]: value });
+        setState(prevState => ({ ...prevState, [event.target.name]: value }));
     };
 
     return (
