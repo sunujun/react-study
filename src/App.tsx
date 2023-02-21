@@ -1,10 +1,10 @@
 import './App.css';
-import { HelloWorld } from './helloWorld/HelloWorld';
+import { ToDoList } from './toDoList/ToDoList';
 
 const App = () => {
     return (
         <div>
-            <HelloWorld />
+            <ToDoList />
         </div>
     );
 };
