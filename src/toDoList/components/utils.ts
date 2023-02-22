@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-export const ITEM_WIDTH = 220;
+export const ITEM_WIDTH = 260;
 
 export const fillEmptyColumns = (
     columns: dayjs.Dayjs[],

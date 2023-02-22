@@ -153,7 +153,7 @@ export const Calendar = ({
     };
 
     return (
-        <div>
+        <div style={{ marginBottom: '20px' }}>
             <CalendarHeader />
             <CalendarDate />
         </div>
