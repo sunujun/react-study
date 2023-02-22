@@ -18,12 +18,13 @@ const Column = ({
     text: number | string;
     color: string;
     opacity: number;
-    onPress?: React.MouseEventHandler<HTMLDivElement>;
+    onPress?: React.MouseEventHandler<HTMLButtonElement>;
     isSelected?: boolean;
     hasToDo?: boolean;
 }) => {
     return (
-        <div
+        <button
+            disabled={disabled}
             onClick={onPress}
             style={{
                 display: 'flex',
@@ -40,7 +41,7 @@ const Column = ({
                 cursor: disabled ? undefined : 'pointer',
             }}>
             {text}
-        </div>
+        </button>
     );
 };
 
@@ -52,10 +53,18 @@ const ArrowButton = ({
     onPress?: React.MouseEventHandler<HTMLSpanElement>;
 }) => {
     return (
-        <div style={{ display: 'flex', padding: '30px 40px' }} onClick={onPress}>
+        <button
+            style={{
+                display: 'flex',
+                margin: '30px 40px',
+                borderColor: 'transparent',
+                background: 'transparent',
+                cursor: 'pointer',
+            }}
+            onClick={onPress}>
             {iconName === 'arrow-right' && <SlArrowRight size="1rem" color="#404040" />}
             {iconName === 'arrow-left' && <SlArrowLeft size="1rem" color="#404040" />}
-        </div>
+        </button>
     );
 };
 
