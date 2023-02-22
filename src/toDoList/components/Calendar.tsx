@@ -2,6 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { SlArrowRight, SlArrowLeft } from 'react-icons/sl';
 import { getDayColor, getDayText } from './utils';
+import { ToDoList } from '../hooks/useToDoList';
 
 const columnSize = 40;
 
@@ -71,11 +72,13 @@ const ArrowButton = ({
 export const Calendar = ({
     columns,
     selectedDate,
+    toDoList,
     onPressArrow,
     onPressDate,
 }: {
     columns: dayjs.Dayjs[];
     selectedDate?: dayjs.Dayjs;
+    toDoList: ToDoList[];
     onPressArrow: (direction: 'left' | 'right') => void;
     onPressDate: (date: dayjs.Dayjs) => void;
 }) => {
@@ -122,6 +125,7 @@ export const Calendar = ({
             onPressDate(date);
         };
         const isSelected = dayjs(date).isSame(selectedDate, 'date');
+        const hasToDo = toDoList.find(toDo => dayjs(toDo.date).isSame(dayjs(date), 'date')) !== undefined;
 
         return (
             <Column
@@ -130,6 +134,7 @@ export const Calendar = ({
                 opacity={isCurrentMonth ? 1 : 0.4}
                 onPress={onPress}
                 isSelected={isSelected}
+                hasToDo={hasToDo}
             />
         );
     };
@@ -138,9 +143,13 @@ export const Calendar = ({
         const dates = [];
         let week = [];
         for (const date of columns) {
-            week.push(<DateColumn item={date} />);
+            week.push(<DateColumn key={'date-' + date} item={date} />);
             if (week.length === 7) {
-                dates.push(<div style={{ display: 'flex', flexDirection: 'row' }}>{week}</div>);
+                dates.push(
+                    <div key={'week-' + date} style={{ display: 'flex', flexDirection: 'row' }}>
+                        {week}
+                    </div>,
+                );
                 week = [];
             }
         }

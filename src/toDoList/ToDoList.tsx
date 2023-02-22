@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import AddToDoInput from './components/AddToDoInput';
 import { Calendar } from './components/Calendar';
+import { ToDoItem } from './components/ToDoItem';
 import { getCalendarColumns } from './components/utils';
 import { useCalendar } from './hooks/useCalendar';
 import { useToDoList } from './hooks/useToDoList';
@@ -30,6 +31,7 @@ export const ToDoList = () => {
                 selectedDate={selectedDate}
                 onPressArrow={onPressArrow}
                 onPressDate={onPressDate}
+                toDoList={toDoList}
             />
             <AddToDoInput
                 value={input}
@@ -37,6 +39,9 @@ export const ToDoList = () => {
                 placeholder={`${dayjs(selectedDate).format('MM.DD')}에 추가할 ToDo`}
                 onSubmit={onSubmit}
             />
+            {filteredToDoList.map(toDo => (
+                <ToDoItem key={'ToDo-' + toDo.id} item={toDo} removeToDo={removeToDo} toggleToDo={toggleToDo} />
+            ))}
         </>
     );
 };

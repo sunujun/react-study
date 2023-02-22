@@ -19,6 +19,7 @@ const AddToDoInput = ({
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
+                marginBottom: '20px',
             }}>
             <form onSubmit={onSubmit}>
                 <input
