@@ -1,16 +1,16 @@
 import dayjs from 'dayjs';
-import AddToDoInput from './components/AddToDoInput';
+import AddTodoInput from './components/AddTodoInput';
 import { Calendar } from './components/Calendar';
-import { ToDoItem } from './components/ToDoItem';
+import { TodoItem } from './components/TodoItem';
 import { getCalendarColumns } from './components/utils';
 import { useCalendar } from './hooks/useCalendar';
-import { useToDoList } from './hooks/useToDoList';
+import { useTodoList } from './hooks/useTodoList';
 
-export const ToDoList = () => {
+export const TodoList = () => {
     const now = dayjs();
     const { selectedDate, setSelectedDate, onPressArrow } = useCalendar(now);
-    const { toDoList, filteredToDoList, input, setInput, addToDo, removeToDo, toggleToDo, resetInput } =
-        useToDoList(selectedDate);
+    const { todoList, filteredTodoList, input, setInput, addTodo, removeTodo, toggleTodo, resetInput } =
+        useTodoList(selectedDate);
     const columns = getCalendarColumns(selectedDate);
     const onPressDate = (date: dayjs.Dayjs) => {
         setSelectedDate(date);
@@ -20,7 +20,7 @@ export const ToDoList = () => {
     };
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        addToDo();
+        addTodo();
         resetInput();
     };
 
@@ -31,16 +31,16 @@ export const ToDoList = () => {
                 selectedDate={selectedDate}
                 onPressArrow={onPressArrow}
                 onPressDate={onPressDate}
-                toDoList={toDoList}
+                todoList={todoList}
             />
-            <AddToDoInput
+            <AddTodoInput
                 value={input}
                 onChange={onChange}
-                placeholder={`${dayjs(selectedDate).format('MM.DD')}에 추가할 ToDo`}
+                placeholder={`${dayjs(selectedDate).format('MM.DD')}에 추가할 Todo`}
                 onSubmit={onSubmit}
             />
-            {filteredToDoList.map(toDo => (
-                <ToDoItem key={'ToDo-' + toDo.id} item={toDo} removeToDo={removeToDo} toggleToDo={toggleToDo} />
+            {filteredTodoList.map(todo => (
+                <TodoItem key={'Todo-' + todo.id} item={todo} removeTodo={removeTodo} toggleTodo={toggleTodo} />
             ))}
         </>
     );

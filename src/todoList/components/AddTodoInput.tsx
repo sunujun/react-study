@@ -1,7 +1,7 @@
 import React from 'react';
 import { ITEM_WIDTH } from './utils';
 
-const AddToDoInput = ({
+const AddTodoInput = ({
     value,
     onChange,
     placeholder,
@@ -41,4 +41,4 @@ const AddToDoInput = ({
     );
 };
 
-export default AddToDoInput;
+export default AddTodoInput;

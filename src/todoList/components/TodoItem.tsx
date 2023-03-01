@@ -1,22 +1,22 @@
 import { IoMdCheckmark, IoIosRemoveCircle } from 'react-icons/io';
-import { ToDoList } from '../hooks/useToDoList';
+import { TodoList } from '../hooks/useTodoList';
 import { ITEM_WIDTH } from './utils';
 
-export const ToDoItem = ({
-    item: toDo,
-    toggleToDo,
-    removeToDo,
+export const TodoItem = ({
+    item: todo,
+    toggleTodo,
+    removeTodo,
 }: {
-    item: ToDoList;
-    toggleToDo: (toDoId: number) => void;
-    removeToDo: (toDoId: number) => void;
+    item: TodoList;
+    toggleTodo: (todoId: number) => void;
+    removeTodo: (todoId: number) => void;
 }) => {
-    const isSuccess = toDo.isSuccess;
+    const isSuccess = todo.isSuccess;
     const onPress = () => {
-        toggleToDo(toDo.id);
+        toggleTodo(todo.id);
     };
     const onPressRemove = () => {
-        removeToDo(toDo.id);
+        removeTodo(todo.id);
     };
 
     return (
@@ -48,7 +48,7 @@ export const ToDoItem = ({
                         wordBreak: 'break-all',
                         textDecoration: isSuccess ? 'line-through' : 'none',
                     }}>
-                    {toDo.content}
+                    {todo.content}
                 </div>
             </div>
             <div

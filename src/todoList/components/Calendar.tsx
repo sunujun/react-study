@@ -2,7 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { SlArrowRight, SlArrowLeft } from 'react-icons/sl';
 import { getDayColor, getDayText } from './utils';
-import { ToDoList } from '../hooks/useToDoList';
+import { TodoList } from '../hooks/useTodoList';
 
 const columnSize = 40;
 
@@ -13,7 +13,7 @@ const Column = ({
     opacity,
     onPress,
     isSelected,
-    hasToDo,
+    hasTodo,
 }: {
     disabled?: boolean;
     text: number | string;
@@ -21,7 +21,7 @@ const Column = ({
     opacity: number;
     onPress?: React.MouseEventHandler<HTMLButtonElement>;
     isSelected?: boolean;
-    hasToDo?: boolean;
+    hasTodo?: boolean;
 }) => {
     return (
         <button
@@ -38,7 +38,7 @@ const Column = ({
                 borderRadius: columnSize / 2,
                 color: color,
                 opacity: opacity,
-                fontWeight: hasToDo ? 'bold' : 'normal',
+                fontWeight: hasTodo ? 'bold' : 'normal',
                 cursor: disabled ? undefined : 'pointer',
             }}>
             {text}
@@ -72,13 +72,13 @@ const ArrowButton = ({
 export const Calendar = ({
     columns,
     selectedDate,
-    toDoList,
+    todoList,
     onPressArrow,
     onPressDate,
 }: {
     columns: dayjs.Dayjs[];
     selectedDate?: dayjs.Dayjs;
-    toDoList: ToDoList[];
+    todoList: TodoList[];
     onPressArrow: (direction: 'left' | 'right') => void;
     onPressDate: (date: dayjs.Dayjs) => void;
 }) => {
@@ -125,7 +125,7 @@ export const Calendar = ({
             onPressDate(date);
         };
         const isSelected = dayjs(date).isSame(selectedDate, 'date');
-        const hasToDo = toDoList.find(toDo => dayjs(toDo.date).isSame(dayjs(date), 'date')) !== undefined;
+        const hasTodo = todoList.find(todo => dayjs(todo.date).isSame(dayjs(date), 'date')) !== undefined;
 
         return (
             <Column
@@ -134,7 +134,7 @@ export const Calendar = ({
                 opacity={isCurrentMonth ? 1 : 0.4}
                 onPress={onPress}
                 isSelected={isSelected}
-                hasToDo={hasToDo}
+                hasTodo={hasTodo}
             />
         );
     };
